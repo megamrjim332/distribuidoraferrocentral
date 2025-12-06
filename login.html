@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ingresar - MiTiendaOnline</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- BARRA NEGRA -->
+  <div class="promo-bar">
+    <div class="promo-inner">
+      <div class="promo-left">
+        <img src="img/bo.png" alt="Bandera de Bolivia" class="promo-flag-header">
+        <span class="promo-country">BOL</span>
+        <span class="promo-separator">|</span>
+        <span class="promo-icon">📍</span>
+        <span class="promo-location">Cochabamba</span>
+      </div>
+      <div class="promo-right">
+        <a href="login.html" class="promo-link">Ingresar</a>
+        <a href="registro_empresa.html" class="promo-link promo-link-primary">Registrar empresa</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="wrap header-main">
+      <a href="inicio.html" class="brand-logo">
+        <img src="img/logos/logo_empresa.png" alt="MiTiendaOnline">
+      </a>
+    </div>
+  </header>
+
+  <main class="wrap" style="max-width:420px;padding:32px 16px;">
+    <h1>Ingresar</h1>
+    <p class="muted">Empresas y administrador pueden ingresar desde aquí.</p>
+
+    <form class="card" style="padding:16px; margin-top:16px;">
+      <label class="field">
+       <span>Correo o NIT</span>
+       <input id="login_user" name="usuario" type="text"
+         placeholder="ej: 12345601 o correo@empresa.com">
+      </label>
+
+      <label class="field">
+       <span>Contraseña</span>
+       <input id="login_pass" name="password" type="password"
+         placeholder="••••••••">
+      </label>
+
+      <label class="field">
+       <span>Tipo de cuenta</span>
+       <select id="login_type" name="tipo">
+       <option value="empresa">Empresa</option>
+       <option value="admin">Administrador</option>
+       </select>
+      </label>
+
+
+      <button type="submit" class="btn block" style="margin-top:16px;">
+        Ingresar
+      </button>
+
+      <p class="muted" style="margin-top:12px;font-size:13px;">
+        ¿Aún no tienes cuenta de empresa?
+        <a href="registro_empresa.html">Registrar empresa</a>
+      </p>
+    </form>
+  </main>
+
+  <script>
+document.querySelector("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const usuario = document.getElementById("login_user").value.trim();
+  const password = document.getElementById("login_pass").value.trim();
+  const tipo = document.getElementById("login_type").value;
+
+  if (!usuario || !password) {
+    alert("Por favor ingresa usuario y contraseña.");
+    return;
+  }
+
+  try {
+    const resp = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ usuario, password, tipo })
+    });
+
+    const data = await resp.json();
+
+    if (!data.ok) {
+      alert("Error: " + (data.error || "No se pudo iniciar sesión"));
+      return;
+    }
+
+    // Si es empresa, guardamos un poquito de info en localStorage
+    if (data.role === "empresa" && data.empresa) {
+      localStorage.setItem("empresaInfo", JSON.stringify(data.empresa));
+    }
+
+    //alert("Bienvenido, " + (data.role === "admin" ? "administrador" : "empresa") + " ✔");//
+
+    // Redirigir a donde diga el backend
+    if (data.redirect) {
+      window.location.href = data.redirect;
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Error de conexión con el servidor.");
+  }
+});
+</script>
+
+</body>
+</html>

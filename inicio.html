@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inicio - MiTiendaOnline</title>
+  <meta name="description" content="Bienvenido a MiTiendaOnline." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <!-- BARRA NEGRA SUPERIOR (COPIADA DE TU INDEX) -->
+    <div class="promo-bar">
+    <div class="promo-inner">
+      <div class="promo-left">
+        <img src="img/bo.png" alt="Bandera de Bolivia" class="promo-flag-header">
+        <span class="promo-country">BOL</span>
+        <span class="promo-separator">|</span>
+        <span class="promo-icon">📍</span>
+        <span class="promo-location">Cochabamba</span>
+      </div>
+
+      <!-- NUEVO: controles de sesión para empresas -->
+      <div class="promo-right">
+        <a href="login.html" class="promo-link" id="promoLoginLink">Ingresar</a>
+        <a href="registro_empresa.html" class="promo-link" id="promoRegisterLink">Registrar empresa</a>
+        <button type="button" class="promo-link" id="promoLogoutBtn" style="display:none;">
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- HEADER SIMPLE CON LOGO -->
+  <header class="topbar">
+    <div class="wrap header-main">
+      <!-- Aquí el logo apunta a ESTA misma página -->
+      <a href="inicio.html" class="brand-logo">
+        <img src="img/logos/logo_empresa.png" alt="MiTiendaOnline">
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTENIDO DE INICIO (LUEGO LO DECORAMOS) -->
+  <main class="wrap">
+
+  <!-- HERO NAVIDAD -->
+  <section class="hero-navidad">
+    <div class="hero-content">
+      <p class="hero-eyebrow">NAVIDAD ESTÁ AQUÍ</p>
+      <p class="hero-title">Descuentos hasta el 20%</p>
+      <button class="btn hero-btn" onclick="location.href='index.html'">
+        Comprar ahora
+      </button>
+    </div>
+
+    <div class="hero-image-wrapper">
+      <img src="img/banners/navidad-hero.png"
+           alt="Navidad está aquí - descuentos hasta el 20%"
+           class="hero-image">
+    </div>
+  </section>
+
+    <!-- SECCIÓN CAROUSEL  -->
+<section class="ellas-full-carousel">
+  <div class="ellas-carousel-wrapper">
+    <div class="ellas-carousel-track">
+
+      <!-- SLIDE 1 -->
+      <article class="ellas-slide">
+        <img src="img/categorias/motosierra.png" alt="Producto para ellas 1">
+        <div class="ellas-slide-overlay">
+          <h3>"Donde la potencia se encuentra con tu esfuerzo."</h3>
+        </div>
+      </article>
+
+      <!-- SLIDE 2 -->
+      <article class="ellas-slide">
+        <img src="img/categorias/podadora.png" alt="Producto para ellas 2">
+        <div class="ellas-slide-overlay">
+          <h3>"Confianza que corta cualquier desafío."</h3>
+        </div>
+      </article>
+
+      <!-- SLIDE 3 -->
+      <article class="ellas-slide">
+        <img src="img/categorias/soplador.png" alt="Producto para ellas 3">
+        <div class="ellas-slide-overlay">
+          <h3>"Porque tu esfuerzo merece la mejor herramienta."</h3>
+        </div>
+      </article>
+
+      <!-- SLIDE 4 -->
+      <article class="ellas-slide">
+        <img src="img/categorias/burrito.png" alt="Producto para ellas 4">
+        <div class="ellas-slide-overlay">
+          <h3>"Más que herramientas, aliados para avanzar."</h3>
+        </div>
+      </article>
+
+      <!-- SLIDE 5 -->
+      <article class="ellas-slide">
+        <img src="img/categorias/cortador.png" alt="Producto para ellas 5">
+        <div class="ellas-slide-overlay">
+          <h3>"Fuerza, precisión y durabilidad. A tu servicio."</h3>
+        </div>
+      </article>
+
+      <!-- SLIDE 6 -->
+      <article class="ellas-slide">
+        <img src="img/categorias/esmeriladora.png" alt="Producto para ellas 6">
+        <div class="ellas-slide-overlay">
+          <h3>"Tu proyecto. Nuestra potencia."</h3>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Botones del carrusel -->
+    <button class="ellas-carousel-btn prev" aria-label="Anterior">‹</button>
+    <button class="ellas-carousel-btn next" aria-label="Siguiente">›</button>
+
+    <!-- Puntos de navegación (opcionales) -->
+    <div class="ellas-carousel-dots">
+      <button class="active"></button>
+      <button></button>
+      <button></button>
+      <button></button>
+      <button></button>
+      <button></button>
+    </div>
+  </div>
+</section>
+<!-- FIN SECCIÓN CAROUSEL PARA ELLAS -->
+ 
+  <!-- Aquí abajo luego pondrás más fotos y texto -->
+  <!-- ... -->
+  <!-- SECCIÓN NUESTROS PRODUCTOS -->
+<!-- SECCIÓN NUESTROS PRODUCTOS -->
+<section class="home-categories">
+  <div class="wrap">
+    <div class="home-categories-layout">
+      
+      <!-- COLUMNA IZQUIERDA: TÍTULOS -->
+      <header class="home-categories-copy">
+        <h2 class="home-categories-title">
+          Elige el diseño de acuerdo a tu estilo
+        </h2>
+        <p class="home-categories-subtitle">
+          Nuestros productos destacados por categoría.
+        </p>
+      </header>
+
+      <!-- COLUMNA DERECHA: MOSAICO DE 5 FOTOS -->
+      <div class="home-categories-grid">
+        <!-- 1: tarjeta grande (ocupa 2 filas) -->
+        <a href="#" class="category-card category-card--large">
+          <div class="category-image">
+            <img src="img/categorias/lampara-de-taller.png" alt="Lamparas">
+          </div>
+          <div class="category-label">
+            <span>LAMPARAS</span>
+          </div>
+        </a>
+
+        <!-- 2 -->
+        <a href="#" class="category-card">
+          <div class="category-image">
+            <img src="img/categorias/taladro-truper.png" alt="Taladros">
+          </div>
+          <div class="category-label">
+            <span>TALADROS</span>
+          </div>
+        </a>
+
+        <!-- 3 -->
+        <a href="#" class="category-card">
+          <div class="category-image">
+            <img src="img/categorias/escaleras-truper.png" alt="Escaleras">
+          </div>
+          <div class="category-label">
+            <span>ESCALERAS</span>
+          </div>
+        </a>
+
+        <!-- 4 -->
+        <a href="#" class="category-card">
+          <div class="category-image">
+            <img src="img/categorias/corta-cables.png" alt="Electricidad">
+          </div>
+          <div class="category-label">
+            <span>ALICATES</span>
+          </div>
+        </a>
+
+        <!-- 5 -->
+        <a href="#" class="category-card">
+          <div class="category-image">
+            <img src="img/categorias/caja-de-herramienta.png" alt="Cajas">
+          </div>
+          <div class="category-label">
+            <span>CAJAS</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<br>
+<!-- SECCIÓN NUESTROS PRODUCTOS ESTRELLA -->
+<section class="featured-products">
+  <div class="wrap">
+    <header class="featured-header">
+      <h2 class="featured-title">Nuestros productos estrella</h2>
+      <p class="featured-subtitle">
+        Los más destacados y buscados por nuestros clientes.
+      </p>
+    </header>
+
+    <div class="featured-grid">
+      <!-- 1 -->
+      <a href="#" class="featured-card">
+        <div class="featured-image">
+          <img src="img/categorias/compactadora.png" alt="Producto estrella 1">
+        </div>
+        <div class="featured-label">
+          <span>COMPACTADORA CON MOTOR HONDA GX160 A GASOLINA 5.5 HP P/TODO TIPO DE COMPACTACION</span>
+        </div>
+      </a>
+
+      <!-- 2 -->
+      <a href="#" class="featured-card">
+        <div class="featured-image">
+          <img src="img/categorias/generador.png" alt="Producto estrella 2">
+        </div>
+        <div class="featured-label">
+          <span>GENERADOR ELÉCTRICO INDUSTRIAL A GASOLINA DE 5500 W CON MOTOR DE 4 TIEMPOS</span>
+        </div>
+      </a>
+
+      <!-- 3 -->
+      <a href="#" class="featured-card">
+        <div class="featured-image">
+          <img src="img/categorias/martillo-demolicion.png" alt="Producto estrella 3">
+        </div>
+        <div class="featured-label">
+          <span>GENERADOR ELÉCTRICO INDUSTRIAL A GASOLINA DE 5500 W CON MOTOR DE 4 TIEMPOS</span>
+        </div>
+      </a>
+
+      <!-- 4 -->
+      <a href="#" class="featured-card">
+        <div class="featured-image">
+          <img src="img/categorias/motor.png" alt="Producto estrella 4">
+        </div>
+        <div class="featured-label">
+          <span>MOTOR A GASOLINA DE 13" HP DE 3600 RPM MOTOR DE 4 TIEMPOS DE 6.50 LITROS</span>
+        </div>
+      </a>
+
+      <!-- 5 -->
+      <a href="#" class="featured-card">
+        <div class="featured-image">
+          <img src="img/categorias/Hidrolavadora.png" alt="Producto estrella 5">
+        </div>
+        <div class="featured-label">
+          <span>HIDROLAVADORA DE 10.5 HP MOTOR A GASOLINA DE 420 CC Y 4000 PSI PORTÁTIL CON RUEDAS</span>
+        </div>
+      </a>
+
+      <!-- 6 -->
+      <a href="#" class="featured-card">
+        <div class="featured-image">
+          <img src="img/categorias/sierra-de-inglete.png" alt="Producto estrella 6">
+        </div>
+        <div class="featured-label">
+          <span>SIERRA DE INGLETE TELESCOPICA DE 10" Y DE 2-1/2" HP DE 1800 W Y VELOCIDAD 5000 RPM</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+ <br>
+
+
+
+</main>
+<script>
+  (function(){
+    const carousels = document.querySelectorAll('.women-carousel');
+
+    carousels.forEach(function(carousel){
+      const track = carousel.querySelector('.women-carousel-track');
+      const prev  = carousel.querySelector('.women-carousel-btn.prev');
+      const next  = carousel.querySelector('.women-carousel-btn.next');
+      if (!track || !prev || !next) return;
+
+      function scrollAmount(){
+        const card = track.querySelector('.women-card');
+        if (!card) return track.clientWidth;
+        const style = getComputedStyle(track);
+        const gap = parseFloat(style.columnGap || style.gap || 16);
+        return card.getBoundingClientRect().width + gap;
+      }
+
+      prev.addEventListener('click', function(){
+        track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+      });
+
+      next.addEventListener('click', function(){
+        track.scrollBy({ left:  scrollAmount(), behavior: 'smooth' });
+      });
+    });
+  })();
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const slides = Array.from(document.querySelectorAll(".ellas-slide"));
+  const dots   = Array.from(document.querySelectorAll(".ellas-carousel-dots button"));
+  const prev   = document.querySelector(".ellas-carousel-btn.prev");
+  const next   = document.querySelector(".ellas-carousel-btn.next");
+
+  if (!slides.length) return;
+
+  let index = 0;
+  let textTimer = null;
+  let slideTimer = null;
+
+  function clearTimers() {
+    clearTimeout(textTimer);
+    clearTimeout(slideTimer);
+  }
+
+  function showSlide(i) {
+    clearTimers();
+    index = i;
+
+    // Activar solo la slide actual
+    slides.forEach((slide, idx) => {
+      slide.classList.toggle("is-active", idx === i);
+      slide.classList.remove("show-text");  // texto oculto al entrar
+    });
+
+    // Actualizar puntos
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle("active", idx === i);
+    });
+
+    // A los 2s: mostrar el texto y difuminar
+    textTimer = setTimeout(() => {
+      slides[i].classList.add("show-text");
+    }, 2000);
+
+    // A los 4s: pasar a la siguiente slide
+    slideTimer = setTimeout(() => {
+      const nextIndex = (i + 1) % slides.length;
+      showSlide(nextIndex);
+    }, 4000);
+  }
+
+  // Siguiente / anterior con botones
+  function nextSlideManual() {
+    const nextIndex = (index + 1) % slides.length;
+    showSlide(nextIndex);
+  }
+
+  function prevSlideManual() {
+    const prevIndex = (index - 1 + slides.length) % slides.length;
+    showSlide(prevIndex);
+  }
+
+  if (next) {
+    next.addEventListener("click", () => {
+      nextSlideManual();
+    });
+  }
+
+  if (prev) {
+    prev.addEventListener("click", () => {
+      prevSlideManual();
+    });
+  }
+
+  // Clic en los puntos
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      showSlide(i);
+    });
+  });
+
+  // Arrancamos en la primera
+  showSlide(0);
+});
+</script>
+
+<footer class="footer-main">
+  <div class="footer-wrap">
+
+    <!-- Columna 1: Información legal -->
+    <div class="footer-col">
+      <h4>Información legal</h4>
+      <ul>
+        <li><a href="terminos.html">Términos y Condiciones</a></li>
+        <li><a href="privacidad.html">Política de Privacidad</a></li>
+        <li><a href="devoluciones.html">Política de Devoluciones</a></li>
+      </ul>
+    </div>
+
+    <!-- Columna 2: Sobre la empresa -->
+    <div class="footer-col">
+      <h4>MiTiendaOnline</h4>
+      <ul>
+        <li><a href="nosotros.html">Quiénes somos</a></li>
+        <li><a href="contacto.html">Contáctanos</a></li>
+        <li><a href="ayuda.html">Preguntas frecuentes (FAQ)</a></li>
+      </ul>
+    </div>
+
+    <!-- Columna 3: Datos de contacto -->
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li>📍 Cochabamba, Bolivia</li>
+        <li>📞 +591 7XXXXXXX</li>
+        <li>✉ contacto@mitienda.bo</li>
+      </ul>
+    </div>
+
+    <!-- Columna 4: Redes -->
+    <div class="footer-col">
+      <h4>Redes sociales</h4>
+      <ul>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">WhatsApp</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 MiTiendaOnline.bo — Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+
+</body>
+</html>

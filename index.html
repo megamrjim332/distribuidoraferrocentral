@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tienda Bolivia — Prendas</title>
+  <meta name="description" content="Vende tus prendas en Bolivia con pago por QR." />
+<link rel="stylesheet" href="styles.css" />
+
+<!-- Leaflet CSS & JS (antes que app.js) -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  defer
+></script>
+
+<!-- QR primero, luego tu app -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs2@0.0.2/qrcode.min.js" defer></script>
+
+<script src="productos.js" defer></script>
+
+<script src="app.js" defer></script>
+
+</head>
+<body>
+<!-- ========== MODAL DE PRODUCTO ========== -->
+<dialog id="productModal" class="modal product-modal">
+  <form method="dialog" class="product-detail">
+
+    <!-- GALERÍA (IZQUIERDA) -->
+    <div class="gallery">
+      <button type="button" class="nav prev" id="gPrev">‹</button>
+      <img id="gMain" src="" alt="Producto">
+      <button type="button" class="nav next" id="gNext">›</button>
+      <div id="gThumbs" class="thumbs"></div>
+    </div>
+
+    <!-- METADATA (DERECHA) -->
+    <div class="meta">
+      <h3 id="pdTitle"></h3>
+      <div class="pd-price" id="pdPrice"></div>
+      <p class="pd-desc" id="pdDesc"></p>
+
+      <!-- AQUI IRÁ EL TEXTO DE LA FICHA (JSON) -->
+      <div id="pdSpecs" class="pd-specs"></div>
+
+      <!-- Botón oculto de ficha PDF -->
+      <div id="pdDatasheetRow" class="datasheet-row" style="display:none !important;">
+        <button id="pdDatasheet" class="btn" type="button" style="display:none !important;">
+          Ver ficha técnica (PDF)
+        </button>
+      </div>
+
+      <div class="cta-row">
+        <button id="pdAdd" type="button" class="btn">Añadir al carrito</button>
+        <button class="btn outline">Cerrar</button>
+      </div>
+    </div>
+
+  </form>
+</dialog>
+
+<!-- ================================================================ -->
+
+   <!-- BARRA NEGRA SUPERIOR TIPO NEW BALANCE -->
+    <div class="promo-bar">
+    <div class="promo-inner">
+      <div class="promo-left">
+        <img src="img/bo.png" alt="Bandera de Bolivia" class="promo-flag-header">
+        <span class="promo-country">BOL</span>
+        <span class="promo-separator">|</span>
+        <span class="promo-icon">📍</span>
+        <span class="promo-location">Cochabamba</span>
+      </div>
+
+      <!-- NUEVO: controles de sesión para empresas -->
+      <div class="promo-right">
+        <a href="login.html" class="promo-link" id="promoLoginLink">Ingresar</a>
+        <a href="registro_empresa.html" class="promo-link" id="promoRegisterLink">Registrar empresa</a>
+        <button type="button" class="promo-link" id="promoLogoutBtn" style="display:none;">
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+<header class="topbar">
+  <div class="wrap header-main">
+    <!-- LOGO IZQUIERDA -->
+    <a href="inicio.html" class="brand-logo">
+  <img src="img/logos/logo_empresa.png" alt="MiTiendaOnline">
+</a>
+
+
+    <!-- FILA DE BOTONES: TODOS + MARCAS (CENTRO) -->
+    <nav class="brand-row" aria-label="Filtrar por marca">
+      <button class="brand-badge is-active" data-brand="">TODOS</button>
+
+      <button class="brand-badge" data-brand="truper">
+        <img src="img/logos/brand_truper.png" alt="TRUPER">
+      </button>
+      <button class="brand-badge" data-brand="pretul">
+        <img src="img/logos/brand_pretul.png" alt="PRETUL">
+      </button>
+      <button class="brand-badge" data-brand="fiero">
+        <img src="img/logos/brand_fiero.png" alt="FIERO">
+      </button>
+      <button class="brand-badge" data-brand="foset">
+        <img src="img/logos/brand_foset.png" alt="FOSET">
+      </button>
+      <button class="brand-badge" data-brand="hermex">
+        <img src="img/logos/brand_hermex.png" alt="HERMEX">
+      </button>
+      <button class="brand-badge" data-brand="klintek">
+        <img src="img/logos/brand_klintek.png" alt="KLINTEK">
+      </button>
+      <button class="brand-badge" data-brand="volteck">
+        <img src="img/logos/brand_volteck.png" alt="VOLTECK">
+      </button>
+    </nav>
+
+    <!-- BUSCADOR + CARRITO DERECHA -->
+    <div class="actions">
+      <input
+        id="search"
+        type="search"
+        placeholder="Buscar producto..."
+        aria-label="Buscar producto"
+      />
+      <button id="cartBtn" class="cart-btn" aria-label="Abrir carrito">
+        🛒 <span id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Botón móvil para abrir las marcas (lo dejamos igual) -->
+  <div class="brand-mobile">
+    <button
+      id="brandToggle"
+      class="brand-toggle"
+      aria-haspopup="dialog"
+      aria-controls="brandSheet"
+    >
+      Marcas
+    </button>
+  </div>
+</header>
+
+
+
+
+
+
+
+
+  <main class="wrap">
+    <!--<section class="filters">
+  <select id="filterCategory">
+  <option value="">Categorías</option>
+  <option value="material eléctrico">Material eléctrico</option>
+  <option value="plomería y baño">Plomería y baño</option>
+  <option value="cerrajería">Cerrajería</option>
+  <option value="limpieza">Limpieza</option>
+  <option value="herramienta manual">Herramienta manual</option>
+  <option value="corte y abrasivos">Corte y abrasivos</option>
+  <option value="automotriz">Automotriz</option>
+  <option value="jardinería">Jardinería</option>
+  <option value="pesca">Pesca</option>
+  <option value="ropa">Ropa</option>
+  <option value="seguridad industrial">Seguridad industrial</option>
+  <option value="cajas y organizadores">Cajas y organizadores</option>
+  <option value="otros">Otros</option>
+</select>
+
+
+
+
+
+  <select id="filterSort">
+    <option value="pop">Más populares</option>
+    <option value="price-asc">Precio: bajo a alto</option>
+    <option value="price-desc">Precio: alto a bajo</option>
+  </select>
+
+  <button id="btnPromos" class="promo-btn">Ofertas limitadas</button>
+</section>-->
+
+<!-- PAGINACIÓN -->
+<div class="pager">
+  <button id="prevPage" type="button" class="btn tiny">&laquo; Anterior</button>
+  <span id="pageInfo" class="pager-info">1 / 1</span>
+  <button id="nextPage" type="button" class="btn tiny">Siguiente &raquo;</button>
+</div>
+<!-- FIN PAGINACIÓN -->
+
+    <section id="grid" class="grid" aria-live="polite" aria-busy="false"><!-- JS render --></section>
+  </main>
+
+<!-- PAGINACIÓN INFERIOR -->
+<div class="pager bottom-pager">
+  <button id="prevPageBottom" type="button" class="btn tiny">&laquo; Anterior</button>
+  <span id="pageInfoBottom" class="pager-info">1 / 1</span>
+  <button id="nextPageBottom" type="button" class="btn tiny">Siguiente &raquo;</button>
+</div>
+
+
+  <!-- Carrito -->
+  <aside id="cartPanel" class="cart" aria-hidden="true">
+    <div class="cart-header">
+      <h2>Tu carrito</h2>
+      <button id="closeCart" aria-label="Cerrar carrito">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="total">
+        <span>Total</span>
+        <strong id="cartTotal">Bs 0.00</strong>
+      </div>
+      <button id="checkoutBtn" class="btn">Continuar</button>
+    </div>
+  </aside>
+
+  <!-- Modal de Detalle de Producto -->
+<dialog id="checkoutModal" class="modal">
+  <form method="dialog" class="checkout" id="checkoutForm">
+    <h3>Datos de envío</h3>
+
+    <div class="grid2">
+      <label>Nombre
+        <input id="c_name" placeholder="Juan" />
+      </label>
+      <label>Apellidos
+        <input id="c_lastname" placeholder="Gonzales Pinto" />
+      </label>
+    </div>
+
+    <div class="grid2">
+      <label>Departamento
+        <select id="c_city">
+          <option value="La Paz">La Paz</option>
+          <option value="Cochabamba">Cochabamba</option>
+          <option value="Santa Cruz">Santa Cruz</option>
+          <option value="Oruro">Oruro</option>
+          <option value="Potosí">Potosí</option>
+          <option value="Chuquisaca">Chuquisaca</option>
+        </select>
+      </label>
+      <label>Tipo de vivienda
+        <select id="c_type">
+          <option value="Casa">Casa</option>
+          <option value="Departamento">Departamento</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="grid2">
+      <label>Número / Piso / Referencia
+        <input id="c_number" placeholder="Ej: Casa 12 o Piso 3" />
+      </label>
+      <label>Teléfono (WhatsApp)
+        <input id="c_phone" placeholder="Ej: 76543210" />
+      </label>
+    </div>
+
+    <label>Dirección detallada
+      <input id="c_address" placeholder="Ej: Calle Sucre 123, Zona Central" />
+    </label>
+
+    <label>Notas adicionales
+      <textarea id="c_notes" rows="2" placeholder="Referencia, horario, etc."></textarea>
+    </label>
+
+    <h3>Entrega y pago</h3>
+
+<div class="pay-grid">
+  <!-- Cuadro 1: Mapa -->
+  <div class="pay-card">
+    <div class="pay-card-header">
+      <strong>Ubicación</strong>
+      <button id="useMyLocation" type="button" class="btn tiny">📍 Usar mi ubicación</button>
+    </div>
+    <div id="map" class="map-box"></div>
+    <small class="muted">Mueve el marcador para ajustar tu ubicación.</small>
+  </div>
+
+  <!-- Cuadro 2: QR -->
+    <div class="pay-card">
+    <div class="pay-card-header">
+      <strong>Pago por QR</strong>
+    </div>
+    <div id="qrcode" class="qrcode center"></div>
+
+    <!-- Total original (se mantiene) -->
+    <div class="total confirm">
+      <span>Total a pagar</span>
+      <strong id="checkoutTotal">Bs 0.00</strong>
+    </div>
+
+    <!-- NUEVO: resumen de precios -->
+    <div id="checkoutBreakdown" class="checkout-info">
+      <div class="line">
+        <span>Subtotal:</span>
+        <span id="checkoutSubtotal">Bs 0.00</span>
+      </div>
+      <div class="line" id="checkoutDiscountRow" style="display:none;">
+        <span>Descuento empresa:</span>
+        <span id="checkoutDiscountText">—</span>
+      </div>
+      <div class="line total-final">
+        <span>Total con descuento:</span>
+        <span id="checkoutTotalFinal">Bs 0.00</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+    <div class="cta-row">
+      <button id="sendWhatsApp" class="btn outline" type="button">Enviar comprobante por WhatsApp</button>
+      <button id="closeCheckout" class="btn" type="button">Cerrar</button>
+    </div>
+  </form>
+</dialog>
+
+
+  <footer class="footer">
+    <div class="wrap">
+      <small>© 2025 MiTienda.bo — Todo los derechos reservados</small>
+    </div>
+  </footer>
+
+<!-- Hoja móvil con las marcas -->
+<div id="brandSheet" class="brand-sheet" aria-hidden="true">
+  <div class="sheet-panel" role="dialog" aria-label="Filtrar por marcas">
+    <div class="sheet-header">
+      <strong>Marcas</strong>
+      <button id="closeBrands" class="icon-btn" aria-label="Cerrar">✕</button>
+    </div>
+
+    <div class="sheet-brands">
+      <button class="brand-badge is-active" data-brand="">Todos</button>
+      <button class="brand-badge" data-brand="truper"><img src="img/logos/brand_truper.png" alt="TRUPER"></button>
+      <button class="brand-badge" data-brand="pretul"><img src="img/logos/brand_pretul.png" alt="PRETUL"></button>
+      <button class="brand-badge" data-brand="fiero"><img src="img/logos/brand_fiero.png" alt="FIERO"></button>
+      <button class="brand-badge" data-brand="foset"><img src="img/logos/brand_foset.png" alt="FOSET"></button>
+      <button class="brand-badge" data-brand="hermex"><img src="img/logos/brand_hermex.png" alt="HERMEX"></button>
+      <button class="brand-badge" data-brand="klintek"><img src="img/logos/brand_klintek.png" alt="Klintek"></button>
+      <button class="brand-badge" data-brand="volteck"><img src="img/logos/brand_volteck.png" alt="VOLTECK"></button>
+    </div>
+
+    <button id="closeBrands2" class="btn outline block">Cerrar</button>
+  </div>
+</div>
+
+
+</body>
+</html>

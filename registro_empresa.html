@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registrar empresa - MiTiendaOnline</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- BARRA NEGRA -->
+  <div class="promo-bar">
+    <div class="promo-inner">
+      <div class="promo-left">
+        <img src="img/bo.png" alt="Bandera de Bolivia" class="promo-flag-header">
+        <span class="promo-country">BOL</span>
+        <span class="promo-separator">|</span>
+        <span class="promo-icon">📍</span>
+        <span class="promo-location">Cochabamba</span>
+      </div>
+      <div class="promo-right">
+        <a href="login.html" class="promo-link">Ingresar</a>
+        <a href="registro_empresa.html" class="promo-link promo-link-primary">Registrar empresa</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="wrap header-main">
+      <a href="inicio.html" class="brand-logo">
+        <img src="img/logos/logo_empresa.png" alt="MiTiendaOnline">
+      </a>
+    </div>
+  </header>
+
+  <main class="wrap" style="max-width:520px;padding:32px 16px;">
+    <h1>Registro de empresa</h1>
+    <p class="muted">
+      Completa estos datos para crear tu cuenta de empresa y poder hacer pedidos con factura.
+    </p>
+
+    <form class="card" style="padding:16px; margin-top:16px;">
+      <label class="field">
+        <span>NIT</span>
+        <input type="text" placeholder="Ej: 12345601">
+      </label>
+
+      <label class="field">
+        <span>Razón Social / Nombre de facturación</span>
+        <input type="text" placeholder="Distribuidora FerroCentral SRL">
+      </label>
+
+      <label class="field">
+        <span>Nombre de contacto</span>
+        <input type="text" placeholder="Nombre y apellido">
+      </label>
+
+      <label class="field">
+        <span>Teléfono / WhatsApp</span>
+        <input type="tel" placeholder="Ej: 76900000">
+      </label>
+
+      <label class="field">
+        <span>Correo electrónico</span>
+        <input type="email" placeholder="correo@empresa.com">
+      </label>
+
+      <label class="field">
+        <span>Dirección</span>
+        <input type="text" placeholder="Zona, calle, número">
+      </label>
+
+      <label class="field">
+        <span>Contraseña</span>
+        <input type="password" placeholder="••••••••">
+      </label>
+
+      <button type="submit" class="btn block" style="margin-top:16px;">
+        Crear cuenta
+      </button>
+
+      <p class="muted" style="margin-top:12px;font-size:13px;">
+        ¿Ya tienes cuenta? <a href="login.html">Ingresar</a>
+      </p>
+    </form>
+  </main>
+
+  <script>
+document.querySelector("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const datos = {
+        nit: document.querySelector("[placeholder='Ej: 12345601']").value,
+        razon_social: document.querySelector("[placeholder='Distribuidora FerroCentral SRL']").value,
+        contacto: document.querySelector("[placeholder='Nombre y apellido']").value,
+        telefono: document.querySelector("[placeholder='Ej: 76900000']").value,
+        correo: document.querySelector("[placeholder='correo@empresa.com']").value,
+        direccion: document.querySelector("[placeholder='Zona, calle, número']").value,
+        password: document.querySelector("[placeholder='••••••••']").value,
+    };
+
+    const resp = await fetch("/api/registro-empresa", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    });
+
+    const data = await resp.json();
+
+    if (data.ok) {
+        alert("Empresa registrada correctamente ✔");
+        window.location.href = "/login";
+    } else {
+        alert("Error: " + data.error);
+    }
+});
+</script>
+
+</body>
+</html>

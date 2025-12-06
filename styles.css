@@ -1,0 +1,2697 @@
+:root{
+  --bg:#0c0c0c; --fg:#f6f6f6; --muted:#b3b3b3; --card:#141414; --line:#222;
+  --brand:#e11d48; --ok:#10b981;
+}
+*{box-sizing:border-box}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--fg);
+}
+
+body {
+  background: linear-gradient(180deg, #D4D7DA, #BFC3C7);
+}
+
+img{max-width:100%;display:block}
+.wrap{max-width:1100px;margin-inline:auto;padding:0 16px}
+
+/* Topbar */
+.topbar{position:sticky;top:0;background:#8e2a21;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:30}
+.topbar .wrap{display:flex;align-items:center;gap:16px;padding:12px 0}
+/* ===== LOGO PRINCIPAL (MiTiendaOnline) ===== */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;   /* 👉 que se quede a la izquierda */
+  height: 70px;
+  padding: 4px 8px;
+  margin-right: 24px;            /* 👉 espacio entre logo y botón "Todos" */
+}
+
+/* BARRA NEGRA SUPERIOR (tipo New Balance) */
+.promo-bar{
+  background:#000;
+  color:#fff;
+  width:100%;
+}
+/* Franja blanca tipo New Balance */
+.main-header-bar {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 8px 0;
+}
+
+
+.promo-inner{
+  max-width:1100px;        /* igual ancho que el contenido */
+  margin-inline:auto;
+  padding:0 16px;          /* mismo padding lateral */
+  height:32px;             /* grosor finito de la barra */
+  display:flex;
+  align-items:center;
+  justify-content:flex-start; /* texto a la izquierda en escritorio */
+  gap:8px;
+  font-size:12px;
+}
+
+.promo-left{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-right: auto; /* NUEVO: empuja la derecha al borde */
+}
+
+.promo-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-left:auto; /* empuja a la derecha */
+}
+
+.promo-link{
+  font-size:10px;
+  text-decoration:none;
+  color:#f5f5f5;
+  border:1px solid rgba(255,255,255,0.4);
+  padding:4px 10px;
+  border-radius:999px;
+  line-height:1;
+  white-space:nowrap;
+}
+
+.promo-link:hover{
+  background:#ffffff;
+  color:#000000;
+}
+
+.promo-link-primary{
+  background:#ffffff;
+  color:#000000;
+  font-weight:600;
+}
+
+
+/* banderita del header */
+.promo-flag-header{
+  width:20px;
+  height:14px;
+  object-fit:cover;
+  display:block;
+}
+
+.promo-country{
+  font-weight:600;
+  letter-spacing:0.06em;
+}
+
+.promo-separator{
+  opacity:0.6;
+}
+
+.promo-icon{
+  font-size:13px;
+}
+
+.promo-location{
+  font-weight:500;
+}
+
+/* En móvil centramos el contenido como NB */
+@media (max-width:600px){
+  .promo-inner{
+    justify-content:space-between;
+    gap:8px;
+  }
+}
+
+
+
+/* En móvil, centramos el contenido */
+@media (max-width:600px){
+  .promo-inner{
+    justify-content:center;
+  }
+}
+
+
+.logo img {
+  display: block;
+  height: 40px;
+  object-fit: contain;
+}
+
+
+
+/* efecto al pasar el mouse */
+.logo img:hover {
+  transform: scale(1.05);
+  
+}
+
+/* ajuste responsive */
+@media (max-width: 800px) {
+  .logo {
+    height: 56px;
+  }
+}
+@media (max-width: 480px) {
+  .logo {
+    justify-content: center;
+    height: 46px;
+  }
+}
+
+.topbar .wrap {
+  padding: 14px 0;
+}
+
+.actions input{background:var(--card);border:1px solid var(--line);color:var(--fg);padding:8px 10px;border-radius:8px}
+.cart-btn{background:var(--card);border:1px solid var(--line);color:var(--fg);padding:8px 12px;border-radius:10px;cursor:pointer}
+
+/* Filters */
+.filters{display:flex;gap:12px;justify-content:flex-end;align-items:center;padding:16px 0}
+.filters select{background:var(--card);border:1px solid var(--line);color:var(--fg);padding:8px 10px;border-radius:10px}
+/* ===== Filtros responsive (móvil) ===== */
+@media (max-width: 600px){
+  .filters{
+    flex-wrap: wrap;              /* deja que los filtros salten a otra línea */
+    justify-content: space-between;
+    padding-inline: 8px;
+    gap: 8px;
+  }
+
+  /* Categorías: ocupa todo el ancho arriba */
+  #filterCategory{
+    flex: 1 1 100%;
+  }
+
+  /* Orden y Ofertas: mitad y mitad abajo */
+  #filterSort{
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .promo-btn{
+    flex: 1 1 calc(50% - 4px);
+    text-align: center;
+  }
+}
+
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-bottom:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.card .info{padding:12px}
+.card h3{margin:6px 0 4px;font-size:16px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.price{margin-top:8px;font-weight:800}
+.card button{margin-top:auto;background:#1e1e1e;border:1px solid var(--line);padding:10px 12px;color:#fff;cursor:pointer}
+.card button:hover{filter:brightness(1.1)}
+
+/* Cart */
+/* === PANEL DEL CARRITO MEJORADO === */
+.cart{
+  position: fixed;
+  top: 0;                           /* 🔹 empieza arriba */
+  right: 0;
+  height: 100dvh;                   /* ocupa todo el alto visible */
+  width: min(420px, 100%);
+  background: #0f0f0f;
+  border-left: 1px solid var(--line);
+  transform: translateX(100%);
+  transition: transform .25s ease;
+  display: flex;
+  flex-direction: column;
+  z-index: 300;
+  box-shadow: -3px 0 12px rgba(0,0,0,.5);
+}
+
+/* cuando está abierto */
+.cart.open{
+  transform: translateX(0);
+}
+
+/* cabecera del carrito (h2 + botón X) */
+.cart-header{
+  background: linear-gradient(
+    135deg,
+    #e2473c 0%,
+    #cc3a2a 35%,
+    #b63428 70%,
+    #a12e25 100%
+  );
+  border-bottom: 1px solid var(--line);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* botón cerrar X */
+.cart-header button{
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color .2s ease;
+}
+.cart-header button:hover{ color: #e67b2e; }
+
+
+.cart-items{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:12px}
+.item{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;background:#121212;border:1px solid var(--line);border-radius:12px;padding:8px}
+.item img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+.item h4{margin:0;font-size:14px}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{background:#1f1f1f;border:1px solid var(--line);color:#fff;padding:4px 8px;border-radius:6px;cursor:pointer}
+.cart-footer{padding:16px;border-top:1px solid var(--line);display:grid;gap:12px}
+.total{display:flex;justify-content:space-between;align-items:center}
+.btn{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
+.btn.outline{background:transparent;border:1px solid var(--line)}
+.modal{border:none;border-radius:16px;padding:0;max-width:1200px;width:96vw}
+.checkout{background:#0f0f0f;border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:12px}
+.checkout input, .checkout select, .checkout textarea{width:100%;background:#141414;border:1px solid var(--line);color:#fff;padding:10px;border-radius:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.qrcode{background:#fff;padding:8px;border-radius:8px;display:inline-block}
+.cta-row{display:flex;gap:12px;justify-content:flex-end}
+.footer{border-top:1px solid var(--line);margin-top:24px}
+.footer .wrap{padding:20px 0}
+
+/* Responsive */
+@media (max-width: 900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+}
+@media (max-width: 600px){
+  .actions input{display:none}
+  .grid{grid-template-columns:1fr}
+}
+
+/* ===== Modal de producto ===== */
+.product-modal .product-detail{
+  display:grid; gap:16px; grid-template-columns:1.2fr .8fr;
+  background: linear-gradient(
+    135deg,
+    #e2473c 0%,
+    #cc3a2a 35%,
+    #b63428 70%,
+    #a12e25 100%
+  );border:1px solid var(--line);border-radius:16px;padding:16px;
+}
+.gallery{position:relative;background: linear-gradient(180deg, #D4D7DA, #BFC3C7);; border:1px solid var(--line); border-radius:12px; padding:8px; display:grid; gap:8px}
+.gallery img{width:100%; height:min(64vh,560px); object-fit:contain; background: linear-gradient(180deg, #D4D7DA, #BFC3C7);; border-radius:8px}
+.gallery .nav{position:absolute; top:50%; transform:translateY(-50%); background:#0008; border:1px solid var(--line); color:#fff; padding:6px 10px; border-radius:8px; cursor:pointer}
+.gallery .prev{left:8px}
+.gallery .next{right:8px}
+.thumbs{display:flex; gap:8px; overflow:auto}
+.thumbs img{width:72px; height:72px; object-fit:cover; border:2px solid transparent; border-radius:8px; cursor:pointer; background:#000}
+.thumbs img.active{border-color:var(--brand)}
+
+.meta{display:grid; gap:12px}
+.pd-price{font-weight:800; font-size:18px}
+.pd-desc{color:var(--muted)}
+.opts{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.opts select{background:#141414;border:1px solid var(--line);color:#fff;padding:10px;border-radius:8px}
+/* Botón de ficha técnica en el modal */
+.datasheet-row {
+  margin-top: 4px;
+}
+
+.datasheet-row .btn {
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+}
+
+
+@media (max-width: 900px){
+  .product-modal .product-detail{grid-template-columns:1fr}
+}
+.checkout input::placeholder,
+.checkout textarea::placeholder {
+  color: #888;
+  opacity: 0.8;
+}
+
+.checkout select {
+  background-color: #141414;
+  border: 1px solid var(--line);
+  color: #fff;
+}
+
+/* Layout QR + Mapa */
+.pay-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.pay-card{
+  background:#111;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+  display:grid;
+  gap:10px;
+}
+.pay-card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.map-box{
+  height:260px;         /* cuadrado/rectángulo compacto */
+  border-radius:10px;
+  border:1px solid #333;
+  overflow:hidden;
+}
+.qrcode.center{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:260px;     /* mismo alto que el mapa */
+  background:#fff;
+  border-radius:10px;
+}
+.btn.tiny{
+  padding:6px 10px;
+  border-radius:8px;
+  background:#1f1f1f;
+  border:1px solid var(--line);
+  color:#fff;
+  cursor:pointer;
+}
+.muted{ color:#999; font-size:12px; }
+
+@media (max-width: 900px){
+  .pay-grid{ grid-template-columns:1fr; }
+  .qrcode.center{ min-height:220px; }
+  .map-box{ height:220px; }
+}
+
+/* Fila de marcas (desktop) */
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 72px;
+  height: 32px;
+}
+
+/*.brand-badge img {
+  display: block;
+  max-height: 22px;
+}*/
+
+.brand-badge.is-active {
+  border-color: #e60026;      /* rojo parecido al de NewBalance */
+  box-shadow: 0 0 0 1px rgba(230, 0, 38, 0.4);
+}
+
+.brand-badge:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+.brand-badge.is-active {
+  border-color: #e67b2e;
+  box-shadow: 0 0 0 2px rgba(230,123,46,0.3) inset;
+}
+
+/* Logos dentro de los botones */
+.brand-badge img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+/* ===== BOTÓN "TODOS" ===== */
+.brand-badge[data-brand=""] {
+  background: #141414;               /* mismo fondo que los demás */
+  color: #ff7a1a;                    /* naranja Truper */
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.brand-badge[data-brand=""]:hover {
+  background: #1a1a1a;
+  box-shadow: 0 4px 18px rgba(230,123,46,0.25);
+  transform: translateY(-1px);
+}
+
+.brand-badge[data-brand=""].is-active {
+  border-color: #e67b2e;
+  box-shadow: 0 0 0 2px rgba(230,123,46,0.3) inset;
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .brand-badge { height: 52px; padding: 6px 10px; }
+  .brand-badge img { height: 36px; }
+}
+@media (max-width: 600px){
+  .brand-badge { height: 48px; min-width: 80px; }
+  .brand-badge img { height: 32px; }
+}
+
+/* Header layout: separa acciones del logo con una distancia responsiva */
+.topbar .wrap{
+  display:flex;
+  align-items:center;
+  column-gap: 12px;                    /* gap base entre elementos */
+}
+
+/* Empuja el bloque de acciones y además deja un colchón entre logo y acciones */
+.actions{
+  margin-left: clamp(28px, 7vw, 140px);/* 🔸 distancia “justa” vs logo (responsive) */
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+/* Tamaño del input para que no “coma” al logo ni al carrito */
+.actions input[type="search"]{
+  width: clamp(220px, 28vw, 360px);    /* crece según ancho de pantalla */
+}
+
+/* Ajuste visual del botón carrito */
+.cart-btn{ margin-left: 4px; }
+
+/* En pantallas medianas reducimos un poco el colchón y el input */
+@media (max-width: 1024px){
+  .actions{ margin-left: clamp(20px, 5vw, 80px); }
+  .actions input[type="search"]{ width: clamp(200px, 34vw, 300px); }
+}
+
+/* En móviles: pegamos acciones al borde derecho y escondemos el input si hace falta */
+@media (max-width: 700px){
+  .actions{ margin-left: auto; gap: 8px; }
+  .actions input[type="search"]{ width: clamp(160px, 42vw, 240px); }
+}
+@media (max-width: 520px){
+  .actions input[type="search"]{ display:none; } /* opcional: si prefieres mostrarlo, borra esta línea */
+}
+/* ===== Alinear buscador y carrito con el grid de productos ===== */
+
+/* Empuja las acciones (buscador + carrito) justo hasta la misma línea del grid */
+.topbar .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 🔸 deja logo a la izquierda y acciones alineadas a la derecha */
+  max-width: 1100px;              /* mismo ancho que .wrap del grid */
+  margin-inline: auto;            /* centra toda la barra */
+  padding: 0 16px;
+}
+
+/* Ajusta el bloque de acciones */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* Ajusta el input y el carrito */
+.actions input[type="search"] {
+  width: clamp(240px, 26vw, 340px);
+}
+
+.cart-btn {
+  margin-left: 4px;
+}
+
+/* Reduce márgenes en pantallas medianas */
+@media (max-width: 900px) {
+  .actions input[type="search"] {
+    width: clamp(200px, 34vw, 280px);
+  }
+}
+@media (max-width: 600px) {
+  .actions input[type="search"] {
+    display: none; /* opcional en móviles */
+  }
+}
+/* Altura del bloque superior (logo + acciones) */
+:root { --topbar-h: 76px; }
+
+/* Mantén el header pegado arriba */
+.topbar { position: sticky; top: 0; z-index: 50; }
+
+/* SOLO en teléfono: marcas sticky debajo del header */
+@media (max-width: 700px){
+  .brand-row{
+    position: sticky;
+    top: var(--topbar-h);   /* se pega justo debajo del logo */
+    z-index: 49;
+    background: #0c0c0c;    /* mismo fondo para tapar contenido al hacer scroll */
+    border-bottom: 1px solid var(--line);
+  }
+}
+/* Mostrar el input en móvil y que no se rompa el layout */
+@media (max-width: 700px){
+  .actions{
+    gap: 8px;
+  }
+  .actions input[type="search"]{
+    display: block !important;   /* anula cualquier display:none anterior */
+    width: min(60vw, 320px);     /* ancho cómodo en móvil */
+  }
+}
+
+/* Muy chico: que quepa junto al carrito */
+@media (max-width: 520px){
+  .actions input[type="search"]{
+    width: calc(100vw - 120px);  /* deja espacio al botón del carrito */
+    max-width: 360px;
+  }
+}
+/* Igualar el ancho del header al del contenido principal */
+.topbar .wrap{
+  max-width: 1100px;     /* el mismo que usas en .wrap del main */
+  margin-inline: auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* logo izq / acciones der */
+}
+
+/* === FIX MOBILE HEADER === */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+
+
+/* Mantiene la fila de marcas fija al hacer scroll */
+.brand-row {
+  position: sticky;
+  top: 96px; /* altura aproximada del logo y barra superior */
+  z-index: 90;
+  background: #8e2a21;
+  border-bottom: 1px solid var(--line);
+}
+
+/* BUSCADOR visible en móvil (reaparece) */
+@media (max-width: 700px) {
+  .actions input[type="search"] {
+    display: block !important;
+    width: 55vw; /* ancho flexible */
+  }
+  .actions {
+    margin-left: auto;
+    gap: 8px;
+  }
+  .cart-btn {
+    margin-left: 2px;
+  }
+}
+
+/* Ajuste para que no tape contenido */
+main {
+  scroll-margin-top: 130px; /* deja espacio cuando navegas anclas o haces scroll */
+}
+/* Botón móvil "Marcas" */
+.brand-mobile { display:none; border-bottom:1px solid var(--line); background:#0c0c0c; }
+.brand-toggle {
+  display:none;
+  width: min(560px, 92vw);
+  margin: 10px auto 12px;
+  background:#141414;
+  border:1px solid var(--line);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:12px;
+  font-weight:700;
+  letter-spacing:.3px;
+}
+
+/* En móvil: ocultar la fila sticky y mostrar el botón */
+@media (max-width:700px){
+  .brand-row{ display:none !important; } /* ya no queda fija */
+  .brand-mobile{ display:block; }
+  .brand-toggle{ display:block; }
+}
+
+/* Hoja móvil para marcas */
+.brand-sheet{
+  position:fixed; inset:0;
+  background: rgba(0,0,0,.45);
+  display:none; /* se muestra con .open */
+  align-items:flex-end; /* tipo bottom-sheet */
+  z-index: 110;
+}
+.brand-sheet.open{ display:flex; }
+.brand-sheet[aria-hidden="true"]{ display:none; }
+
+.sheet-panel{
+  width:100%;
+  background:#0f0f0f;
+  border-top-left-radius:16px;
+  border-top-right-radius:16px;
+  border-top:1px solid var(--line);
+  padding:12px 12px 16px;
+  box-shadow: 0 -10px 30px rgba(0,0,0,.45);
+}
+
+.sheet-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:4px 2px 10px; border-bottom:1px solid var(--line);
+}
+.icon-btn{
+  background:#1a1a1a; border:1px solid var(--line); color:#fff;
+  padding:6px 10px; border-radius:8px; cursor:pointer;
+}
+
+.sheet-brands{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px;
+  padding:12px 2px 4px;
+}
+@media (min-width:430px) and (max-width:700px){
+  .sheet-brands{ grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Que los badges en la hoja ocupen todo el ancho de su celda */
+/* Botones dentro de la hoja de marcas (modal móvil) */
+.sheet-brands .brand-badge {
+  width: 100%;
+  min-width: 0;
+  height: auto;                 /* que crezca según el logo */
+  padding: 6px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;            /* nada se corta */
+}
+
+/* Logos dentro de los botones de la hoja */
+.sheet-brands .brand-badge img {
+  display: block;
+  max-width: 100%;              /* cabe dentro del botón */
+  height: auto;
+  max-height: 56px;             /* puedes subir/bajar este número */
+  object-fit: contain;
+}
+
+
+.btn.block{ width:100%; margin-top:10px; }
+
+/* Botón móvil "Marcas" */
+.brand-mobile { display:none; border-bottom:1px solid var(--line); background: linear-gradient(
+    135deg,
+    #e2473c 0%,
+    #cc3a2a 35%,
+    #b63428 70%,
+    #a12e25 100%
+  ); }
+.brand-toggle {
+  display:none;
+  width: min(560px, 92vw);
+  margin: 10px auto 12px;
+  background:#141414;
+  border:1px solid var(--line);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:12px;
+  font-weight:700;
+  letter-spacing:.3px;
+}
+
+/* En móvil: ocultar la fila sticky y mostrar el botón */
+@media (max-width:700px){
+  .brand-row{ display:none !important; }
+  .brand-mobile{ display:block; }
+  .brand-toggle{ display:block; }
+}
+
+/* Hoja móvil para marcas (bottom sheet) */
+.brand-sheet{
+  position:fixed; inset:0;
+  background: rgba(0,0,0,.45);
+  display:none;            /* visible con .open */
+  align-items:flex-end;
+  z-index: 110;
+}
+.brand-sheet.open{ display:flex; }
+.brand-sheet[aria-hidden="true"]{ display:none; }
+
+.sheet-panel{
+  width:100%;
+  background:#0f0f0f;
+  border-top-left-radius:16px;
+  border-top-right-radius:16px;
+  border-top:1px solid var(--line);
+  padding:12px 12px 16px;
+  box-shadow: 0 -10px 30px rgba(0,0,0,.45);
+}
+.sheet-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:4px 2px 10px; border-bottom:1px solid var(--line);
+}
+.icon-btn{
+  background:#1a1a1a; border:1px solid var(--line); color:#fff;
+  padding:6px 10px; border-radius:8px; cursor:pointer;
+}
+
+.sheet-brands{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px;
+  padding:12px 2px 4px;
+}
+@media (min-width:430px) and (max-width:700px){
+  .sheet-brands{ grid-template-columns: repeat(3, 1fr); }
+}
+
+
+.card {
+  position: relative;
+}
+
+.promo-flag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #ff1744;
+  color: #fff;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+  z-index: 5;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.price-old {
+  font-size: 13px;
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.meta-line {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.sale-label {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* Paginación */
+.pager{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin:0 auto 12px;
+}
+
+.pager-info{
+  font-size:0.9rem;
+  color:var(--muted, #ccc);
+}
+
+.pager .btn.tiny{
+  padding:4px 10px;
+  font-size:0.8rem;
+}
+
+/* Paginación responsive */
+@media (max-width:600px){
+  .pager{
+    padding-inline:8px;
+    gap:8px;
+  }
+  .pager-info{
+    min-width:80px;
+    text-align:center;
+  }
+}
+
+/* PAGINACIÓN */
+.pager{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  margin:15px auto;
+}
+
+.pager .btn.tiny{
+  padding:6px 14px;
+  font-size:0.85rem;
+  background:#ff9800;        /* 🔶 NARANJA TRUPER */
+  color:#ffffff;             /* ⬜ BLANCO BRILLANTE */
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.pager .btn.tiny:hover{
+  background:#ffa726;        /* tono más claro al pasar */
+}
+
+.pager-info{
+  font-size:0.9rem;
+  color:#ffffff;
+  padding:2px 10px;
+}
+
+/* Paginación responsive */
+@media(max-width:600px){
+  .pager{
+    gap:10px;
+  }
+  .pager .btn.tiny{
+    padding:6px 10px;
+    font-size:0.8rem;
+  }
+}
+
+/* === BARRA PRINCIPAL TIPO NEW BALANCE (FONDO CLARO) === */
+
+/* El header completo con fondo claro, como New Balance */
+.topbar {
+  background: #fdfdfd !important;  /* blanco hueso */
+  backdrop-filter: none;
+}
+
+
+/* Fondo claro para la fila del logo + buscador + carrito */
+.topbar .wrap {
+  background: #fdfdfd;                 /* blanco hueso */
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Fondo claro para la fila de marcas (que antes se veía rojo) */
+.brand-row {
+  background: #fdfdfd !important;
+}
+/* =======================
+   HEADER ESTILO NEW BALANCE
+   (override, no borrar nada de arriba)
+   ======================= */
+
+/* El header completo es sticky y columna:
+   1) barra negra (si la tienes)
+   2) barra blanca con logo + buscador + carrito
+   3) fila de marcas */
+header.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  background: #fdfdfd;              /* blanco hueso */
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Contenedor horizontal del logo + buscador + carrito */
+header.topbar > .wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Logo MiTiendaOnline */
+header.topbar .logo {
+  display: flex;
+  align-items: center;
+}
+
+header.topbar .logo img {
+  height: 40px;
+  display: block;
+}
+
+/* Buscador + carrito claros sobre fondo blanco */
+header.topbar .actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header.topbar .actions input[type="search"] {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #111;
+  padding: 7px 10px;
+  border-radius: 8px;
+  min-width: 220px;
+}
+
+header.topbar .cart-btn {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #111;
+  padding: 7px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ===== Fila de marcas (sobre blanco) ===== */
+.brand-row {
+  background: #fdfdfd;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
+  /* altura y aire como New Balance */
+  padding: 16px 48px;
+
+  /* ocupa TODO el ancho disponible entre logo y buscador */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;          /* más separación entre logos */
+  flex: 1 1 auto;     /* 🔸 se estira dentro del header */
+
+  overflow-x: visible; /* sin scroll horizontal */
+}
+
+/* Botones de marca sin cajas negras */
+.brand-badge {
+  background: transparent;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Logos GRANDES tipo New Balance */
+.brand-badge img {
+  display: block;
+  height: 56px;      /* 🔸 aquí se agrandan de verdad */
+  object-fit: contain;
+}
+
+
+/* Marca seleccionada: subrayado rojo tipo New Balance */
+.brand-badge.is-active {
+  box-shadow: 0 2px 0 #e4002b;
+}
+
+/* Botón "Todos" que no tiene imagen */
+.brand-badge.is-active:not(:has(img)),
+.brand-badge:not(:has(img)) {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* ===== Versión móvil ===== */
+@media (max-width: 768px) {
+  header.topbar > .wrap {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  header.topbar .logo img {
+    height: 32px;
+  }
+
+  header.topbar .actions input[type="search"] {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .brand-row {
+    padding: 10px 12px;
+    gap: 18px;
+  }
+
+  .brand-badge img {
+    height: 36px;   /* un poco más grandes también en móvil */
+  }
+}
+/* ===== HEADER UNA SOLA FILA TIPO NEW BALANCE (DEFINITIVO) ===== */
+
+/* Header general */
+header.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: #fdfdfd;                     /* blanco hueso */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Fila única: logo + marcas + buscador */
+header.topbar .wrap.header-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* LOGO IZQUIERDA */
+header.topbar .logo {
+  display: flex;
+  align-items: center;
+}
+
+header.topbar .logo img {
+  height: 44px;              /* puedes subir a 50 si lo quieres más grande */
+  display: block;
+  object-fit: contain;
+}
+
+/* MARCAS al centro ocupando TODO el espacio */
+header.topbar .brand-row {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;                 /* separación entre marcas */
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  position: static;          /* 🔸 desactiva el sticky viejo que tenías */
+}
+
+/* Botones de marca sin cajas raras */
+.brand-badge {
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* LOGOS GRANDES tipo New Balance */
+.brand-badge img {
+  height: 64px;              /* 🔸 aquí mandas el tamaño de los logos */
+  display: block;
+  object-fit: contain;
+}
+
+/* Texto "Todos" (no lleva imagen) */
+.brand-badge.is-active:not(:has(img)),
+.brand-badge:not(:has(img)) {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* ACCIONES DERECHA: buscador + carrito */
+header.topbar .actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header.topbar .actions input[type="search"] {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #111;
+  padding: 7px 10px;
+  border-radius: 999px;
+  min-width: 260px;
+}
+
+header.topbar .cart-btn {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #111;
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ===== Versión móvil ===== */
+@media (max-width: 768px) {
+  header.topbar .wrap.header-main {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  header.topbar .logo img {
+    height: 32px;
+  }
+
+  header.topbar .brand-row {
+    gap: 18px;
+  }
+
+  .brand-badge img {
+    height: 40px;
+  }
+
+  header.topbar .actions input[type="search"] {
+    min-width: 0;
+    flex: 1;
+  }
+}
+/* ===== HEADER UNA SOLA FILA TIPO NEW BALANCE (DEFINITIVO) ===== */
+
+/* Barra blanca debajo de la barra negra */
+header.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: #fdfdfd;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Fila única: logo + marcas + buscador/carrito */
+header.topbar .wrap.header-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* LOGO IZQUIERDA */
+.brand-logo img {
+  height: 44px;              /* sube a 50 si lo quieres más grande */
+  display: block;
+  object-fit: contain;
+}
+
+/* MARCAS CENTRO ocupando TODO el espacio */
+header.topbar .brand-row {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  position: static;          /* quita el sticky viejo */
+}
+
+/* Botones de marca sin cajas raras */
+.brand-badge {
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* LOGOS GRANDES tipo New Balance */
+.brand-badge img {
+  height: 64px;              /* tamaño de las marcas */
+  display: block;
+  object-fit: contain;
+}
+
+/* Texto "TODOS" (no lleva imagen) */
+.brand-badge.is-active:not(:has(img)),
+.brand-badge:not(:has(img)) {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* Buscador + carrito a la derecha */
+header.topbar .actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header.topbar .actions input[type="search"] {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #111;
+  padding: 7px 10px;
+  border-radius: 999px;
+  min-width: 260px;
+}
+
+header.topbar .cart-btn {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #111;
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Versión móvil */
+@media (max-width: 768px) {
+  header.topbar .wrap.header-main {
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
+  .brand-logo img {
+    height: 32px;
+  }
+
+  header.topbar .brand-row {
+    gap: 18px;
+    flex-wrap: wrap;   /* si no caben, salta a otra línea */
+  }
+
+  .brand-badge img {
+    height: 40px;
+  }
+
+  header.topbar .actions input[type="search"] {
+    min-width: 0;
+    flex: 1;
+  }
+}
+/* ==== FIX VISIBILIDAD LOGO HOME ==== */
+.brand-logo {
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo img {
+  height: 52px;         /* pon 52 o 56 si lo quieres un poco más grande */
+  display: block;
+  object-fit: contain;
+}
+/* ==== FIX TAMAÑO LOGOS DE MARCA (tipo New Balance) ==== */
+header.topbar .brand-row .brand-badge img {
+  height: 64px;     /* tamaño grande tipo New Balance */
+  max-height: none; /* anula el max-height:22px viejo */
+}
+/* ==== FIX LOGO HOME ESCRITORIO ==== */
+header.topbar .brand-logo {
+  display: flex;
+  align-items: center;
+}
+
+header.topbar .brand-logo img {
+  height: 52px;          /* sube a 60 si lo quieres más grande */
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+/* ==== LOGOS DE MARCA GRANDES EN EL HEADER ==== */
+header.topbar .brand-row .brand-badge img {
+  height: 64px;       /* tamaño tipo New Balance */
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+/* ===== FIX HEADER TIPO NEW BALANCE (FINAL) ===== */
+
+/* Barra blanca: header con una sola fila (logo | marcas | buscador/carrito) */
+header.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: #fdfdfd;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Distribuimos en 3 columnas: logo - marcas - acciones */
+header.topbar .wrap.header-main {
+  width: 100%;                 /* ocupa todo el ancho de la ventana */
+  max-width: none;             /* quita el límite de 1100px */
+  margin: 0;                   /* sin margen centrado */
+  padding: 10px 24px;          /* espacio desde el borde (ajusta aquí) */
+  display: grid;
+  grid-template-columns: max-content 1fr max-content; /* logo | marcas | acciones */
+  align-items: center;
+  column-gap: 24px;
+}
+
+
+/* LOGO IZQUIERDA: lo forzamos a mostrarse siempre */
+header.topbar .brand-logo {
+  display: flex !important;
+  align-items: center;
+}
+
+header.topbar .brand-logo img {
+  display: block;
+  height: 120px;       /* súbelo a 60 si lo quieres más grande */
+  width: auto;
+  object-fit: contain;
+}
+
+/* MARCAS CENTRO */
+header.topbar .brand-row {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  position: static !important;  /* quita cualquier sticky anterior */
+  top: auto;
+}
+
+/* Botones de marca sin cajas alrededor */
+header.topbar .brand-row .brand-badge {
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Logos de marca grandes */
+header.topbar .brand-row .brand-badge img {
+  display: block;
+  height: 64px;       /* tamaño tipo New Balance */
+  width: auto;
+  object-fit: contain;
+}
+
+/* Texto "TODOS" (sin imagen) */
+header.topbar .brand-row .brand-badge:not(:has(img)) {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* BUSCADOR + CARRITO DERECHA */
+header.topbar .actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+header.topbar .actions input[type="search"] {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #111;
+  padding: 7px 10px;
+  border-radius: 999px;
+  min-width: 260px;
+}
+
+header.topbar .cart-btn {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #111;
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ===== Versión móvil ===== */
+@media (max-width: 768px) {
+  /* Header en 2 columnas: logo | acciones */
+  header.topbar .wrap.header-main {
+    padding: 8px 10px;
+    column-gap: 8px;
+    grid-template-columns: auto max-content;  /* logo ocupa el ancho, acciones a la derecha */
+  }
+
+  /* Logo un poco más pequeño en móvil */
+  header.topbar .brand-logo img {
+    height: 80px;
+  }
+
+  /* Ocultamos la fila de marcas en el header (ya usas el botón "Marcas" abajo) */
+  header.topbar .brand-row {
+    display: none !important;
+  }
+  .brand-mobile {
+    display: block;
+  }
+
+  /* Buscador + carrito se ajustan sin salirse */
+  header.topbar .actions {
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  header.topbar .actions input[type="search"] {
+    min-width: 0;
+    width: 100%;
+    max-width: 230px;  /* evita que empuje al carrito fuera de la pantalla */
+  }
+}
+
+/* ===== FIX TABLET / IPAD ===== */
+@media (min-width: 768px) and (max-width: 1100px) {
+
+  /* Quitar el límite de 1100px para todo lo que usa .wrap
+     (main, secciones, etc.) en tablet */
+  .wrap {
+    max-width: none;
+    width: 100%;
+    margin-inline: 0;
+    padding-inline: 16px;
+  }
+
+  /* Por si algún otro estilo pisa al main, lo reforzamos */
+  main.wrap {
+    max-width: none;
+    width: 100%;
+  }
+
+  /* Grid de 3 columnas que aprovecha todo el ancho */
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+/* =========================
+   HERO NAVIDAD (inicio.html)
+   ========================== */
+
+.hero-navidad{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #b52d23;            /* rojo tipo navidad / tu página */
+  border-radius: 16px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+}
+
+/* Columna del texto */
+.hero-content{
+  padding: 32px 32px 32px 32px;
+  color: #fff;
+}
+
+.hero-eyebrow{
+  margin: 0 0 8px;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.hero-title{
+  margin: 0 0 20px;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+/* Botón del hero: aprovechamos .btn pero lo ponemos negro como NB */
+.hero-btn{
+  background: #000;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.hero-btn:hover{
+  filter: brightness(1.1);
+}
+
+/* Columna de la imagen */
+.hero-image-wrapper{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-image{
+  width: 100%;
+  height: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== Responsivo ===== */
+
+/* Tablets y pantallas medianas: apilamos si se ve muy estrecho */
+@media (max-width: 900px){
+  .hero-navidad{
+    grid-template-columns: 1fr;
+  }
+  .hero-image-wrapper{
+    order: -1;              /* imagen arriba, texto abajo */
+  }
+  .hero-content{
+    padding: 24px 16px;
+    text-align: center;
+  }
+}
+
+/* Móviles: texto un poco más pequeño */
+@media (max-width: 600px){
+  .hero-title{
+    font-size: 24px;
+  }
+  .hero-eyebrow{
+    font-size: 12px;
+  }
+  .hero-image{
+    max-height: 320px;
+  }
+}
+/* HERO TIPO NEW BALANCE EXACTO */
+.hero-nb {
+  position: relative;
+  width: 100vw;
+  height: 740px; /* → altura real del hero */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+/* Imagen del hero */
+.hero-nb-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right bottom; /* → esto es clave */
+}
+
+/* Contenido del texto */
+.hero-nb-content {
+  position: absolute;
+  top: 16%; /* → alineación real */
+  left: 180px; /* → mismo margen que NB */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estilos de texto */
+.hero-nb-eyebrow {
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.hero-nb-title {
+  font-size: 48px;
+  font-weight: 700;
+  max-width: 400px;
+  line-height: 1.1;
+}
+
+/* Botón */
+.hero-nb-btn {
+  background-color: #d50000;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .hero-nb {
+    height: 420px;
+  }
+
+  .hero-nb-content {
+    left: 20px;
+    top: 65%;
+    transform: translateY(-50%);
+  }
+
+  .hero-nb-title {
+    font-size: 30px;
+  }
+}
+/* ==== EFECTO HOVER BONITO EN LOGOS DE MARCA ==== */
+header.topbar .brand-row .brand-badge img {
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+header.topbar .brand-row .brand-badge:hover img {
+  transform: scale(1.12);          /* se agranda un poquito */
+  filter: brightness(1.08);        /* un toque más brillante */
+}
+/* ==== EFECTO HOVER EN LOGO PRINCIPAL ==== */
+.brand-logo img {
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.brand-logo:hover img {
+  transform: scale(1.06);                /* un poco menos que las marcas */
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
+}
+/* ===========================
+   SECCIÓN NUESTROS PRODUCTOS
+   =========================== */
+
+.home-categories{
+  padding: 50px 0 70px;
+  background: radial-gradient(circle at center, #DCDDDE, #AEB2B6 70%);
+
+}
+
+.home-categories .wrap{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* layout tipo FABOCE:
+   izquierda texto, derecha mosaico */
+.home-categories-layout{
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2fr);
+  gap: 32px;
+  align-items: start;
+}
+
+/* columna izquierda */
+.home-categories-copy{
+  text-align: left;
+}
+
+.home-categories-title{
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.home-categories-subtitle{
+  margin: 0;
+  font-size: 15px;
+  color: #777;
+}
+
+/* mosaico de 5 tarjetas */
+.home-categories-grid{
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 190px;        /* controla la altura base */
+}
+
+/* tarjeta grande (la primera) */
+.category-card--large{
+  grid-row: span 2;             /* ocupa dos filas → alta como el ejemplo */
+}
+
+/* TARJETA GENÉRICA */
+.category-card{
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #b52d23 !important;
+  text-decoration: none;
+}
+
+.category-image{
+  position: absolute;
+  inset: 0;
+}
+
+.category-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* WEB: que llene la tarjeta */
+  padding: 0;              /* sin margen en web */
+  background: transparent;
+  transform: scale(1);
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+
+
+
+/* capa oscura */
+.category-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.05),
+    rgba(0,0,0,0.55)
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+/* texto centrado estilo “MÁRMOLES” */
+.category-label{
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.category-label span{
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* EFECTO HOVER (desktop) */
+.category-card:hover .category-image img{
+  transform: scale(1.08);
+  filter: blur(1px) brightness(0.85);
+}
+
+.category-card:hover::before{
+  opacity: 1;
+}
+
+.category-card:hover .category-label{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== TABLET ===== */
+@media (max-width: 900px){
+
+  .home-categories-layout{
+    grid-template-columns: 1fr;
+  }
+
+  .home-categories-copy{
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .home-categories-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 220px;
+  }
+
+  .category-card--large{
+    grid-row: span 2;
+  }
+
+  /* Texto siempre visible en tablet */
+  .category-label{
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  .category-card::before{
+    opacity: 1 !important;
+  }
+
+  /* TABLET: que no se corten tanto las imágenes */
+  .category-image img{
+    object-fit: contain;   /* ya no corta */
+    padding: 10px;         /* un marco pequeño */
+    filter: none !important;
+    transform: scale(1) !important;
+  }
+}
+  .category-label{
+    align-items: flex-start;       /* texto arriba */
+    justify-content: center;
+    padding-top: 24px;
+  }
+
+
+
+/* ===== MÓVIL ===== */
+@media (max-width: 600px){
+
+  .home-categories-grid{
+    grid-template-columns: 1fr;
+    grid-auto-rows: 260px;
+  }
+
+  /* Texto siempre visible en móvil */
+  .category-label{
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  .category-card::before{
+    opacity: 1 !important;
+  }
+
+  /* MÓVIL: imagen completa y centrada */
+  .category-image img{
+  object-fit: contain;
+  padding: 30px;
+  background: transparent;
+}
+
+
+  .category-label span{
+    font-size: 20px;
+    letter-spacing: 0.1em;
+  }
+}
+  .category-label{
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 32px;
+  }
+
+  .category-label span{
+    font-size: 18px;
+    letter-spacing: 0.14em;
+  }
+
+/* ===========================
+   SECCIÓN NUESTROS PRODUCTOS ESTRELLA
+   =========================== */
+
+.featured-products{
+  padding: 50px 0 70px;
+  background: #ebcc9dcc;
+    /* fondo claro debajo del rojo */
+}
+
+.featured-products .wrap{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Título centrado arriba */
+.featured-header{
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.featured-title{
+  margin: 0 0 6px;
+  font-size: 26px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #222;
+}
+
+.featured-subtitle{
+  margin: 0;
+  font-size: 14px;
+  color: #777;
+}
+
+/* GRID 2x3 (tarjetas más anchas que altas) */
+.featured-grid{
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Tarjeta base */
+.featured-card{
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  cursor: pointer;
+  background: #d94f36;                 /* rojo truper suave */
+  text-decoration: none;
+  aspect-ratio: 4 / 6;                 /* un poco más larga que alta */
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+/* Imagen */
+.featured-image{
+  position: absolute;
+  inset: 0;
+}
+
+.featured-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;                   /* en PC llena sin bordes */
+  transform: scale(1);
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+
+/* capa oscura gradient */
+.featured-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.05),
+    rgba(0,0,0,0.55)
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Texto centrado */
+.featured-label{
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.featured-label span{
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* HOVER (modo web) */
+.featured-card:hover .featured-image img{
+  transform: scale(1.06);
+  filter: blur(1px) brightness(0.9);
+}
+
+.featured-card:hover::before{
+  opacity: 1;
+}
+
+.featured-card:hover .featured-label{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+
+/* Tablet: 2 columnas */
+@media (max-width: 900px){
+
+  .featured-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Texto siempre visible en tablet Y más arriba */
+  .featured-label{
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    align-items: flex-start;       /* 👉 texto hacia arriba */
+    justify-content: center;
+    padding-top: 28px !important;  /* 👉 súbelo más o menos según veas */
+  }
+
+  .featured-card::before{
+    opacity: 1 !important;
+  }
+
+  /* Para que no se corten mucho en tablet */
+  .featured-image img{
+    object-fit: contain !important;
+    padding: 12px !important;
+    filter: none !important;
+    transform: scale(1) !important;
+  }
+
+  .featured-card{
+    background: linear-gradient(180deg,#ffded4,#ffc9b5);
+  }
+}
+
+@media (max-width: 900px){
+
+  /* SUBIR EL TEXTO EN TABLET */
+  .featured-label{
+    padding-top: 30px !important;
+  }
+
+  /* REDUCIR TAMAÑO DE LETRA UN POCO */
+  .featured-label span{
+    font-size: 15px !important;
+  }
+}
+
+
+/* Móvil: 1 columna, tarjetas más altas */
+@media (max-width: 600px){
+
+  .featured-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .featured-card{
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(180deg,#ffded4,#ffc9b5);
+  }
+
+  .featured-image img{
+    object-fit: contain !important;
+    padding: 16px !important;
+  }
+
+  /* Texto siempre visible Y más arriba en móvil */
+  .featured-label{
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    align-items: flex-start;       /* 👉 arriba */
+    justify-content: center;
+    padding-top: 36px;             /* 👉 ajusta a tu gusto (30–40) */
+  }
+
+  .featured-card::before{
+    opacity: 1 !important;
+  }
+
+  .featured-label span{
+    font-size: 10px;               /* 👉 un poco más pequeño */
+    letter-spacing: 0.002em;
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 600px){
+
+  /* SUBIR EL TEXTO SOBRE LA IMAGEN */
+  .featured-label{
+    padding-top: 215px !important;   /* súbelo más o menos según quieras */
+  }
+
+  /* REDUCIR UN POCO EL TAMAÑO DE LETRA */
+  .featured-label span{
+    font-size: 12px !important;   /* antes era 18px */
+    line-height: 1.2;
+  }
+}
+ /* ============================
+   CAROUSEL PARA ELLAS (FULL WIDTH)
+   ============================ */
+
+.ellas-full-carousel {
+  padding: 0;              /* sin espacio extra arriba/abajo */
+  background: transparent; /* que se vea el fondo rojo del body */
+}
+
+.ellas-carousel-wrapper {
+  max-width: 1200px;
+  margin: 0 auto auto;   /* un poquito de aire abajo, pero sin banda blanca de sección */
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* El track se mueve horizontalmente */
+.ellas-carousel-track {
+  display: flex;
+  transition: transform 0.45s ease;
+}
+
+/* Cada slide ocupa TODO el ancho blanco */
+.ellas-slide {
+  position: relative;
+  flex: 0 0 100%;          /* clave: 100% del ancho visible */
+  max-width: 100%;
+  aspect-ratio: 10 / 4;    /* ancho 10, alto 4 como pediste */
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.25);
+  background: #d44b26;     /* color de fondo por si la imagen tarda */
+}
+
+/* Imagen siempre cubre el contenedor */
+.ellas-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* Capa de texto que aparece al pasar el cursor (PC) */
+.ellas-slide-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0)
+  );
+
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.ellas-slide-overlay h3 {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+}
+
+/* Efecto al pasar el cursor en modo escritorio */
+.ellas-slide:hover img {
+  filter: brightness(0.55);
+  transform: scale(1.03);
+}
+
+.ellas-slide:hover .ellas-slide-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Botones del carrusel */
+.ellas-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.ellas-carousel-btn.prev {
+  left: 14px;
+}
+
+.ellas-carousel-btn.next {
+  right: 14px;
+}
+
+.ellas-carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Puntos inferiores (opcionales) */
+.ellas-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.4rem;
+}
+
+.ellas-carousel-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: none;
+  background: #d1d1d1;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease, width 0.25s ease;
+}
+
+.ellas-carousel-dots button.active {
+  background: #ff5b2e;
+  width: 22px;
+  transform: scale(1.05);
+}
+
+/* ============================
+   RESPONSIVE: tablets y móviles
+   ============================ */
+
+/* Tablets y abajo */
+@media (max-width: 1024px) {
+  .ellas-slide {
+    aspect-ratio: 10 / 6; /* un poco más alto en pantallas chicas */
+    border-radius: 20px;
+  }
+
+  /* El texto SIEMPRE visible y arriba para no tapar tanto la imagen */
+  .ellas-slide-overlay {
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 1.2rem 1.4rem;
+    opacity: 1;
+    transform: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.85),
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0)
+    );
+  }
+
+  .ellas-slide-overlay h3 {
+    font-size: 1rem;
+    max-width: 80%;
+  }
+
+  .ellas-slide img {
+    filter: brightness(0.9);  /* un poquito más oscura para leer mejor */
+  }
+
+  /* el hover no hace falta en touch, pero no estorba */
+}
+
+/* Celulares pequeños */
+@media (max-width: 600px) {
+  .ellas-full-carousel {
+    padding: 2.5rem 0 3rem;
+  }
+
+  .ellas-slide {
+    border-radius: 16px;
+  }
+
+  .ellas-carousel-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 1.3rem;
+  }
+}
+/* ============================
+   CAROUSEL ELLAS: FADE ENTRE FOTOS
+   ============================ */
+
+/* El track ahora es un contenedor estático con altura fija (10/4) */
+.ellas-carousel-track {
+  position: relative;
+}
+
+/* Truco para mantener la proporción 10:4 del carrusel */
+.ellas-carousel-track::before {
+  content: "";
+  display: block;
+  padding-top: 40%; /* 4 / 10 = 0.4 → 40% de alto respecto al ancho */
+}
+
+/* Cada slide se apila uno encima de otro y se difumina con opacity */
+.ellas-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 2s ease;  /* 👉 fade de 2 segundos */
+}
+
+/* Slide visible */
+.ellas-slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+/* ============================
+   ELLAS: FADE ENTRE FOTOS + TEXTO A LOS 2s
+   ============================ */
+
+/* El track ahora actúa como contenedor con proporción fija */
+.ellas-carousel-track {
+  position: relative;
+  display: block;
+}
+
+/* Mantener proporción aproximada 10:4 */
+.ellas-carousel-track::before {
+  content: "";
+  display: block;
+  padding-top: 40%; /* 4/10 = 0.4 → 40% alto relativo al ancho */
+}
+
+/* Todas las slides apiladas una encima de otra */
+.ellas-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 2s ease;  /* 👉 fade de 2 segundos */
+}
+
+/* Slide visible */
+.ellas-slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Aseguramos que la imagen ocupa todo el contenedor */
+.ellas-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Texto oculto al inicio */
+.ellas-slide .ellas-slide-overlay {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 2s ease, transform 2s ease;
+  pointer-events: none;
+}
+
+/* Cuando toca mostrar el texto (a los 2s) */
+.ellas-slide.show-text .ellas-slide-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Difuminar y oscurecer la imagen mientras se ve el lema */
+.ellas-slide.show-text img {
+  filter: brightness(0.45) blur(2px);
+  transition: filter 2s ease;
+}
+
+/* Override para móviles/tablet: respetar la animación de texto también */
+@media (max-width: 1024px) {
+  .ellas-slide .ellas-slide-overlay {
+    /* mantenemos el gradiente bonito, pero controlamos la opacidad con JS */
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.85),
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0)
+    );
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 1.2rem 1.4rem;
+  }
+
+  .ellas-slide img {
+    filter: none; /* sin oscurecer por defecto */
+  }
+
+  .ellas-slide.show-text img {
+    filter: brightness(0.45) blur(2px);
+  }
+}
+
+/* ============================
+   FOOTER PROFESIONAL
+   ============================ */
+
+.footer-main {
+  background: #0c0c0c;
+  padding: 50px 0 20px;
+  border-top: 1px solid #222;
+  color: #ddd;
+  margin-top: 60px;
+}
+
+.footer-wrap {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  padding: 0 20px;
+}
+
+.footer-col h4 {
+  font-size: 16px;
+  margin-bottom: 14px;
+  color: #fff;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.footer-col ul li a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.footer-col ul li a:hover {
+  color: #ff7a1a;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #999;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .footer-wrap {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-wrap {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+/* Forzar texto blanco dentro del modal*/
+.product-modal,.product-modal{
+  color: #ffffff !important;
+}
+/* Cuando haya un modal abierto, bloqueamos scroll del body */
+body.modal-open {
+  overflow: hidden;
+  touch-action: none;   /* evita scroll en móvil */
+}
+.pd-specs {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  max-height: 220px;      /* límite para que no se haga gigante */
+  overflow-y: auto;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 0.5rem;
+}
+.pd-specs p {
+  margin: 0 0 0.35rem 0;
+}
+/* ============================
+   Resumen del checkout
+   ============================ */
+.checkout-info {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #111;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #f5f5f5;
+}
+
+.checkout-info .line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.checkout-info .total-final {
+  margin-top: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+@media (max-width: 600px) {
+  .checkout-info {
+    font-size: 0.85rem;
+    padding: 8px 10px;
+  }
+
+  .checkout-info .total-final {
+    font-size: 0.95rem;
+  }
+}
+/* Controles de sesión en la barra negra */
+.promo-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.promo-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  cursor: pointer;
+}
+
+.promo-link:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* En móvil, botones un poquito más pequeños */
+@media (max-width: 600px) {
+  .promo-link {
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+}
+/* Fondo especial para el panel administrador */
+.admin-body {
+  background: linear-gradient(
+    135deg,
+    #e2473c 0%,
+    #cc3a2a 35%,
+    #b63428 70%,
+    #a12e25 100%
+  );
+}
+/* Tablas del panel administrador */
+#tabla-pedidos,
+#tabla-empresas {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#tabla-pedidos th,
+#tabla-pedidos td,
+#tabla-empresas th,
+#tabla-empresas td {
+  padding: 8px 10px;
+  text-align: left;
+}
+
+#tabla-pedidos thead tr,
+#tabla-empresas thead tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#tabla-pedidos tbody tr + tr,
+#tabla-empresas tbody tr + tr {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#tabla-pedidos tbody tr:nth-child(even),
+#tabla-empresas tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+/* Tarjetas superiores del administrador */
+.admin-summary {
+  display: grid;
+  grid-template-columns: 1.4fr 1.4fr 1.2fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Móvil / tablets: apilar tarjetas */
+@media (max-width: 900px) {
+  .admin-summary {
+    grid-template-columns: 1fr;
+  }
+}
+/* Tablas del admin en pantallas pequeñas */
+@media (max-width: 768px) {
+  #tabla-pedidos,
+  #tabla-empresas {
+    display: block;
+    overflow-x: auto;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  #tabla-pedidos th,
+  #tabla-pedidos td,
+  #tabla-empresas th,
+  #tabla-empresas td {
+    padding: 6px 8px;
+  }
+}
+/* NUEVO estilo para recuadros del panel admin */
+.admin-box {
+    background: rgba(255,255,255,0.4) !important;
+    padding: 16px;
+    border-radius: 14px;
+    backdrop-filter: blur(4px);
+}
+/* Texto oscuro dentro de admin-box */
+.admin-box,
+.admin-box * {
+    color: #2a2a2a !important;
+}
+.admin-body h2,
+.admin-body h3,
+.admin-body strong {
+    color: #ffffff !important;
+}
+#tabla-pedidos,
+#tabla-empresas {
+    background: rgba(0,0,0,0.15);
+    border-radius: 10px;
+}

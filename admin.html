@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel administrador - MiTiendaOnline</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-body">
+
+
+  <!-- BARRA NEGRA -->
+  <div class="promo-bar">
+    <div class="promo-inner">
+      <div class="promo-left">
+        <img src="img/bo.png" alt="Bandera de Bolivia" class="promo-flag-header">
+        <span class="promo-country">BOL</span>
+        <span class="promo-separator">|</span>
+        <span class="promo-icon">📍</span>
+        <span class="promo-location">Cochabamba</span>
+      </div>
+      <div class="promo-right">
+        <a href="login.html" class="promo-link">Cerrar sesión</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="wrap header-main">
+      <a href="inicio.html" class="brand-logo">
+        <img src="img/logos/logo_empresa.png" alt="MiTiendaOnline">
+      </a>
+      <div>
+        <strong>Panel administrador</strong>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" style="padding:24px 16px;">
+    <section class="admin-summary">
+      <div class="admin-box">
+        <h2>Productos</h2>
+        <p class="muted">Editar precios, activar/desactivar, subir imágenes.</p>
+        <button class="btn small" type="button" id="btn-ver-empresas">Ver empresas</button>
+
+      </div>
+
+      <div class="admin-box">
+        <h2>Pedidos</h2>
+        <p class="muted">Revisar pedidos de empresas y su estado.</p>
+        <button class="btn small" type="button">Ver pedidos</button>
+      </div>
+
+      <div class="admin-box">
+        <h2>Empresas</h2>
+        <p class="muted">Ver empresas registradas y sus descuentos.</p>
+        <button class="btn small" type="button">Ver empresas</button>
+      </div>
+    </section>
+
+    <!-- Luego aquí haremos tablas reales con datos desde el backend -->
+
+    <h2>Pedidos recientes</h2>
+<div class="admin-box" style="margin-top:16px;">
+  <table id="tabla-pedidos">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Empresa</th>
+      <th>Fecha</th>
+      <th>Total (Bs)</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+</div>
+
+<div id="pedido-detalle" class="admin-box" style="margin-top:16px; display:none;">
+  <h3>Detalle del pedido</h3>
+  <div id="pedido-detalle-info" class="muted" style="margin-bottom:8px;"></div>
+
+  <div style="margin:8px 0;">
+    <label for="estado-select"><strong>Estado:</strong></label>
+    <select id="estado-select" style="margin-left:8px;">
+      <option value="pendiente">pendiente</option>
+      <option value="procesando">procesando</option>
+      <option value="facturado">facturado</option>
+      <option value="enviado">enviado</option>
+      <option value="entregado">entregado</option>
+      <option value="cancelado">cancelado</option>
+    </select>
+    <button id="btn-guardar-estado" class="btn small" style="margin-left:8px;">
+      Guardar estado
+    </button>
+  </div>
+
+  <table style="width:100%; margin-top:8px; font-size:14px;">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Descripción</th>
+        <th>Cant.</th>
+        <th>Precio U.</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody id="detalle-items"></tbody>
+  </table>
+</div>
+
+<h2 style="margin-top:32px;">Empresas registradas</h2>
+<div class="admin-box" style="margin-top:16px;">
+  <table id="tabla-empresas">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>NIT</th>
+      <th>Razón social</th>
+      <th>Contacto</th>
+      <th>Teléfono</th>
+      <th>Correo</th>
+      <th>Descuento (%)</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+</div>
+
+
+<script>
+let pedidoSeleccionadoId = null;
+
+// ==================== PEDIDOS ====================
+async function cargarPedidos() {
+  const resp = await fetch("/api/pedidos");
+  const data = await resp.json();
+
+  if (!data.ok) return;
+
+  const tbody = document.querySelector("#tabla-pedidos tbody");
+  tbody.innerHTML = "";
+
+  data.pedidos.forEach(p => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${p.id}</td>
+      <td>${p.razon_social}</td>
+      <td>${p.fecha}</td>
+      <td>${Number(p.total).toFixed(2)}</td>
+      <td>${p.estado}</td>
+      <td>
+        <button class="btn small ver-pedido" data-id="${p.id}">
+          Ver
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Añadir eventos a los botones "Ver"
+  document.querySelectorAll(".ver-pedido").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      mostrarDetallePedido(id);
+    });
+  });
+}
+
+async function mostrarDetallePedido(id) {
+  const resp = await fetch(`/api/pedidos/${id}`);
+  const data = await resp.json();
+  if (!data.ok) {
+    alert("No se pudo cargar el pedido");
+    return;
+  }
+
+  pedidoSeleccionadoId = id;
+
+  const p = data.pedido;
+  const items = data.items;
+
+  const infoDiv = document.getElementById("pedido-detalle-info");
+  infoDiv.innerHTML = `
+    <strong>Pedido #${p.id}</strong><br>
+    Empresa: ${p.razon_social} (NIT: ${p.nit})<br>
+    Contacto: ${p.contacto}<br>
+    Fecha: ${p.fecha}<br>
+    Notas: ${p.notas || "-"}
+  `;
+
+  const estadoSelect = document.getElementById("estado-select");
+  estadoSelect.value = p.estado;
+
+  const tbody = document.getElementById("detalle-items");
+  tbody.innerHTML = "";
+
+  items.forEach(i => {
+    const subtotal = Number(i.cantidad) * Number(i.precio_unit);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${i.producto_id}</td>
+      <td>${i.descripcion}</td>
+      <td>${i.cantidad}</td>
+      <td>${Number(i.precio_unit).toFixed(2)}</td>
+      <td>${subtotal.toFixed(2)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById("pedido-detalle").style.display = "block";
+}
+
+document.getElementById("btn-guardar-estado").addEventListener("click", async () => {
+  if (!pedidoSeleccionadoId) {
+    alert("Primero selecciona un pedido.");
+    return;
+  }
+
+  const nuevoEstado = document.getElementById("estado-select").value;
+
+  const resp = await fetch(`/api/pedidos/${pedidoSeleccionadoId}/estado`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ estado: nuevoEstado })
+  });
+
+  const data = await resp.json();
+  if (!data.ok) {
+    alert("No se pudo actualizar el estado: " + (data.error || ""));
+    return;
+  }
+
+  alert("Estado actualizado a: " + nuevoEstado);
+  cargarPedidos(); // recargar la tabla para ver el nuevo estado
+});
+
+// ==================== EMPRESAS + DESCUENTO ====================
+async function cargarEmpresas() {
+  const resp = await fetch("/api/empresas");
+  const data = await resp.json();
+
+  if (!data.ok) return;
+
+  const tbody = document.querySelector("#tabla-empresas tbody");
+  tbody.innerHTML = "";
+
+  data.empresas.forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.id}</td>
+      <td>${e.nit}</td>
+      <td>${e.razon_social}</td>
+      <td>${e.contacto}</td>
+      <td>${e.telefono}</td>
+      <td>${e.correo}</td>
+      <td>
+        <input
+          type="number"
+          min="0"
+          max="100"
+          step="0.01"
+          class="input-descuento"
+          data-id="${e.id}"
+          value="${Number(e.descuento || 0).toFixed(2)}"
+          style="width:80px;"
+        />
+        %
+        <button
+          class="btn small guardar-descuento"
+          data-id="${e.id}"
+          style="margin-left:4px;"
+        >
+          Guardar
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Activamos los botones "Guardar" de cada fila
+  activarBotonesDescuento();
+}
+
+function activarBotonesDescuento() {
+  document.querySelectorAll(".guardar-descuento").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      const input = document.querySelector(`.input-descuento[data-id="${id}"]`);
+      const valor = input.value;
+
+      if (valor === "" || isNaN(Number(valor))) {
+        alert("Ingresa un porcentaje válido.");
+        return;
+      }
+
+      try {
+        const resp = await fetch(`/api/empresas/${id}/descuento`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ descuento: valor })
+        });
+
+        const data = await resp.json();
+        if (!data.ok) {
+          alert("No se pudo guardar el descuento: " + (data.error || ""));
+          return;
+        }
+
+        // Actualizamos el value con lo que devolvió el backend (por si redondea)
+        input.value = Number(data.descuento).toFixed(2);
+        alert("Descuento actualizado correctamente.");
+      } catch (err) {
+        console.error(err);
+        alert("Error de conexión al guardar el descuento.");
+      }
+    });
+  });
+}
+
+// ==================== INICIO ====================
+cargarPedidos();
+cargarEmpresas();
+
+document.getElementById("btn-ver-empresas").addEventListener("click", () => {
+  const tabla = document.getElementById("tabla-empresas");
+  if (tabla) {
+    tabla.scrollIntoView({ behavior: "smooth" });
+  }
+});
+</script>
+
+
+
+  </main>
+
+</body>
+</html>
